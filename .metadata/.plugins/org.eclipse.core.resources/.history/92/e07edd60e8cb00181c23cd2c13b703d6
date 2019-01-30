@@ -1,0 +1,53 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
+<html>
+<head>
+<title>Create a Database using JSP</title>
+</head>
+<body>
+<h1>Create a Database using JSP</h1>
+<% 
+Connection connection = null;
+try {
+Class.forName("com.mysql.jdbc.Driver").newInstance();
+System.out.println("connection will start");
+connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/project1", "root", "password");
+
+System.out.println("connection obtained");
+Statement statement = connection.createStatement();
+
+String query = "select task_id, title from mytable";
+ResultSet rs=statement.executeQuery(query);
+%>
+<table border=1>
+<tr>
+<th>ID</th><th>Name</th>
+</tr>
+<% 
+while(rs.next()){
+	
+	String editurl="editpage.jsp?id="+rs.getInt(1);
+	String linkUrl="<a href="+editurl+">"+rs.getInt(1);
+	%>
+	<tr>
+	<td><%=linkUrl%></td><td><%=rs.getString(2)%></td>
+	
+</tr>
+
+	<%
+}
+
+
+connection.close();
+System.out.println("Database test created sucessfully.");
+} 
+catch (Exception e) 
+{
+	System.out.println(e);
+	System.out.println("An error occurred.");
+}
+%>
+</table>
+</body>
+</html>

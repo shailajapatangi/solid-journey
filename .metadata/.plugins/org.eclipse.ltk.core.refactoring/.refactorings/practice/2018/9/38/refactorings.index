@@ -1,0 +1,11 @@
+1537213577250	Delete element
+1537541676655	Extract method 'shiftNode'
+1537652815432	Rename local variable 'exp'
+1537652867380	Rename local variable 'stack'
+1537652910081	Rename local variable 'character2'
+1537653451023	Rename local variable 'x'
+1537655031796	Rename method 'isMatchingPair'
+1537657161747	Rename method 'performOperation'
+1537657282866	Extract method 'isOpeningSymbol'
+1537657301390	Extract method 'isClosingSymbol'
+1537659251277	Delete element

@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+
+
+String cid     = request.getParameter("cid");
+String address_id     = request.getParameter("address_id");
+String phone_id     = request.getParameter("phone_id");
+String date_id     = request.getParameter("date_id");
+  
+try{
+    Class.forName("com.mysql.jdbc.Driver");
+    String url     = "jdbc:mysql://localhost:3306/temp";
+    String user    = "root";
+    String pass    = "password";
+    Connection con = DriverManager.getConnection(url, user, pass);
+    Statement stmt = con.createStatement();
+    String sql     = "delete from contactName  "+
+                     "WHERE contact_id = "+cid;
+    stmt.executeUpdate(sql);
+    sql     = "delete from address  "+
+            "WHERE contact_id = "+cid;
+    stmt.executeUpdate(sql);
+    sql     = "delete from phone  "+
+            "WHERE contact_id = "+cid;
+    stmt.executeUpdate(sql);
+    sql     = "delete from date  "+
+            "WHERE contact_id = "+cid;
+    stmt.executeUpdate(sql);
+
+	con.close();
+	
+  } catch(Exception e){
+      System.out.println(e);
+  }
+
+%>	
+
+<jsp:forward page="index.jsp" />
+</body>
+</html>

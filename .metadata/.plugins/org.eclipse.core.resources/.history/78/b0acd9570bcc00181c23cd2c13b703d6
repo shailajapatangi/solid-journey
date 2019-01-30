@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+
+
+int cid     = request.getParameter("cid");
+String phone   = request.getParameter("phone");
+String address = request.getParameter("address");
+
+  
+try{
+    Class.forName("com.mysql.jdbc.Driver");
+    String url     = "jdbc:mysql://localhost:3306/project1";
+    String user    = "root";
+    String pass    = "password";
+    Connection con = DriverManager.getConnection(url, user, pass);
+    Statement stmt = con.createStatement();
+    String sql     = "UPDATE mytable SET "+
+	                 "  phone = '"+phone +"', "+
+                     "  address = '"+address+"'"+
+                     "WHERE id = "+cid;
+    
+
+	stmt.executeUpdate(sql);
+
+	con.close();
+	
+  } catch(Exception e){
+      System.out.println(e);
+  }
+
+%>	
+
+<jsp:forward page="index.jsp" />
+</body>
+</html>

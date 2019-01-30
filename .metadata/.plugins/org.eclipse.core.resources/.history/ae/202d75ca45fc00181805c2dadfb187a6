@@ -1,0 +1,126 @@
+<%@page import="com.mysql.jdbc.StringUtils"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+
+
+String cid     = request.getParameter("cid");
+String fname   = request.getParameter("fname");
+String mname = request.getParameter("mname");
+String lname = request.getParameter("lname");
+String work_zip=request.getParameter("work_zip");
+String work_state=request.getParameter("work_state");
+String work_city=request.getParameter("work_city");
+String work_address=request.getParameter("work_address");
+String work_phone=request.getParameter("work_phone");
+String home_zip=request.getParameter("home_zip");
+String home_state=request.getParameter("home_state");
+String home_city=request.getParameter("home_city");
+String home_address=request.getParameter("home_address");
+String home_phone=request.getParameter("home_phone");
+String birthday=request.getParameter("birthday");
+String cell_phone=request.getParameter("cell_phone");
+
+String home_add_id=request.getParameter("home_add_id");
+String work_add_id=request.getParameter("work_add_id");
+String Cell_phone_id=request.getParameter("Cell_phone_id");
+String home_phone_id=request.getParameter("home_phone_id");
+String work_phone_id=request.getParameter("work_phone_id");
+String birthday_id=request.getParameter("birthday_id");
+  
+try{
+    Class.forName("com.mysql.jdbc.Driver");
+    String url     = "jdbc:mysql://localhost:3306/project1";
+    String user    = "root";
+    String pass    = "password";
+    Connection con = DriverManager.getConnection(url, user, pass);
+    Statement stmt = con.createStatement();
+
+    String sql     = "INSERT INTO contactName (first_name,middle_name,last_name) values ( "+
+	                 "'"+fname +"', "+
+                     "'"+mname+"', "+
+                     "'"+lname+"'"+
+                     ")";
+    stmt.executeUpdate(sql);
+    
+    int  num=Integer.parseInt(cid);
+    cid=Integer.toString(num);
+    
+    if(!StringUtils.isNullOrEmpty(home_address) || !StringUtils.isNullOrEmpty(home_city) || !StringUtils.isNullOrEmpty(home_state) || !StringUtils.isNullOrEmpty(home_zip)){
+     sql     = "INSERT INTO address (contact_id,address_type, address, city, state, zip)  values ( "+
+            +num +", "+
+            "'"+"Home address"+"', "+
+            "'"+home_address+"  "+"',"+
+            "'"+home_city+"  "+"',"+
+            "'"+home_state+"  "+"',"+
+            "'"+home_zip+"  "+"'"+
+            ")";
+stmt.executeUpdate(sql);
+    }
+
+    if(!StringUtils.isNullOrEmpty(work_address) || !StringUtils.isNullOrEmpty(work_city) || !StringUtils.isNullOrEmpty(work_state) || !StringUtils.isNullOrEmpty(work_zip)){
+        sql     = "INSERT INTO address (contact_id,address_type, address, city, state, zip) values ( "+
+               +num +", "+
+               "'"+"Work address"+"', "+
+               "'"+work_address+"  "+"',"+
+               "'"+work_city+"  "+"',"+
+               "'"+work_state+"  "+"',"+
+               "'"+work_zip+"  "+"'"+
+               ")";
+   stmt.executeUpdate(sql);
+       }
+
+    if(!StringUtils.isNullOrEmpty(birthday)){
+    	 sql     = "INSERT INTO date (contact_id,date, date_type) values ( "+
+                 "'"+cid +"', "+
+                 "'"+birthday+"', "+
+                 "'"+"Birthday"+"'"+
+                 ")";
+     stmt.executeUpdate(sql);
+    }
+    if(!StringUtils.isNullOrEmpty(cell_phone)){
+   	 sql     = "INSERT INTO phone (contact_id,phone_type, area_code, number) values ( "+
+                "'"+cid +"', "+
+                "'"+"Cell"+"', "+
+                "'"+cell_phone.substring(0, 3)+"',"+
+                "'"+cell_phone.substring(4, 11)+"'"+
+                ")";
+    stmt.executeUpdate(sql);
+   }
+    if(!StringUtils.isNullOrEmpty(home_phone)){
+      	 sql     = "INSERT INTO phone (contact_id,phone_type, area_code, number) values ( "+
+                   "'"+cid +"', "+
+                   "'"+"Home"+"', "+
+                   "'"+home_phone.substring(0, 3)+"',"+
+                   "'"+home_phone.substring(4, 11)+"'"+
+                   ")";
+       stmt.executeUpdate(sql);
+      }
+    if(!StringUtils.isNullOrEmpty(work_phone)){
+     	 sql     = "INSERT INTO phone (contact_id,phone_type, area_code, number) values ( "+
+                  "'"+cid +"', "+
+                  "'"+"Work"+"', "+
+                  "'"+work_phone.substring(0, 3)+"',"+
+                  "'"+work_phone.substring(4, 11)+"'"+
+                  ")";
+      stmt.executeUpdate(sql);
+     }
+	con.close();
+	
+  } catch(Exception e){
+      System.out.println(e);
+  }
+
+%>	
+
+<jsp:forward page="index.jsp" />
+</body>
+</html>
